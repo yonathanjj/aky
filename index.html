@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon | Kitchinova</title>
+
+    <!-- Google Fonts: Inter (A clean, strong, modern font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- GSAP (GreenSock Animation Platform) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* === CSS STYLES === */
+        :root {
+            /* Color Palette from your image */
+            --primary-blue: #004689;
+            --accent-yellow: #FED209;
+            --secondary-teal: #005555;
+            --secondary-blue: #008ED2;
+            --dark-text: #000000;
+            --light-text: #555555;
+            --bg-color: #F4F7F9; /* A very light, clean grey */
+            --card-bg: #FFFFFF;
+            --border-color: #EAEAEA;
+            --shadow-color: rgba(0, 70, 137, 0.1);
+        }
+
+        /* --- Global Resets & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--dark-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        /* --- Main Content Card --- */
+        .card {
+            max-width: 700px;
+            width: 100%;
+            background-color: var(--card-bg);
+            padding: clamp(2rem, 8vw, 4rem);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px var(--shadow-color);
+            text-align: center;
+            opacity: 0; /* Initial state for GSAP */
+            transform: translateY(30px);
+        }
+
+        /* --- Logo --- */
+        .logo {
+            max-height: 250px;
+            width: auto;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 3.75rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .highlight {
+            /* Underline effect with the accent yellow */
+            background-image: linear-gradient(180deg, transparent 65%, var(--accent-yellow) 65%);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            padding: 0 0.1em;
+            display: inline; /* Use inline not inline-block to allow wrapping */
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--light-text);
+            max-width: 500px;
+            margin: 0 auto 3rem auto;
+            line-height: 1.7;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* --- CTA and Form --- */
+        .signup-form {
+            position: relative;
+            max-width: 450px;
+            margin: 0 auto;
+            min-height: 55px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .form-container {
+            display: flex;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--card-bg);
+            transition: all 0.4s ease;
+        }
+
+        .form-container:focus-within {
+             border-color: var(--accent-yellow);
+             box-shadow: 0 0 0 3px rgba(254, 210, 9, 0.4);
+        }
+
+        .form-container input {
+            flex-grow: 1;
+            border: none;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            color: var(--dark-text);
+        }
+
+        .form-container button {
+            border: none;
+            background-color: var(--primary-blue);
+            color: var(--card-bg);
+            padding: 0 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        .signup-form.success .form-container {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .success-message {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+
+        .signup-form.success .success-message {
+            opacity: 1;
+        }
+
+        /* --- Mobile Responsive Styles --- */
+        @media (max-width: 500px) {
+            .form-container {
+                flex-direction: column;
+                border-radius: 12px;
+            }
+            .form-container input {
+                text-align: center;
+                border-bottom: 2px solid var(--border-color);
+            }
+            .form-container button {
+                padding: 1.1rem;
+                width: 100%;
+            }
+        }
+
+        /* --- Footer --- */
+.site-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    text-align: center;
+    opacity: 0; /* Initial state for GSAP */
+    transform: translateY(20px);
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: var(--light-text);
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: var(--light-text);
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-blue);
+    transform: translateY(-3px);
+}
+
+.social-links svg {
+    width: 22px;
+    height: 22px;
+}
+
+@media (max-width: 500px) {
+    .site-footer {
+        padding: 1.5rem 1rem;
+    }
+    .footer-content {
+        flex-direction: column-reverse; /* Puts social icons on top */
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<main class="card">
+    <!-- ======================================= -->
+    <!-- === REPLACE WITH YOUR PNG LOGO HERE === -->
+    <img src="logo.png" alt="Kitchinova Logo" class="logo">
+    <!-- ======================================= -->
+
+    <h1>Something new is <span class="highlight">coming.</span></h1>
+
+    <p class="subtitle">
+        We are launching a new collection of high-quality essentials designed to simplify and beautify your home.
+    </p>
+
+    <form class="signup-form" id="notifyForm">
+        <div class="form-container">
+            <input type="email" name="email" id="emailInput" placeholder="Enter your email" required>
+            <button type="submit">Notify Me</button>
+        </div>
+        <div class="success-message">
+            ✅ Awesome! We'll keep you updated.
+        </div>
+    </form>
+</main>
+
+<!-- ADD THIS FOOTER HTML RIGHT AFTER YOUR </main> TAG -->
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <p class="copyright">© 2025 Akaay. All Rights Reserved.</p>
+    </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- 1. SETUP THE GSAP ANIMATION TIMELINE ---
+        // This runs once when the page loads to animate elements into view.
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } });
+
+        // This is the corrected sequence of animations for all page elements.
+        tl.to('.card', { opacity: 1, y: 0, duration: 1.2 })
+          .to('.logo', { opacity: 1, y: 0 }, "-=0.9")
+          .to('h1', { opacity: 1, y: 0 }, "-=0.9")
+          .to('.highlight', { backgroundSize: '100% 100%', ease: 'power2.inOut', duration: 0.7 }, "-=0.7")
+          .to('.subtitle', { opacity: 1, y: 0 }, "-=1")
+          // The footer animation is now correctly placed here to animate with the main content.
+          .to('.site-footer', { opacity: 1, y: 0 }, "-=0.8")
+          // The form animates in last.
+          .to('.signup-form', { opacity: 1, y: 0 }, "-=0.8");
+
+
+        // --- 2. SETUP THE FORM SUBMISSION LOGIC ---
+        // This runs only when the user interacts with the form.
+        const form = document.getElementById('notifyForm');
+        const emailInput = document.getElementById('emailInput');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the page from reloading on submit.
+
+            // Check if the email input is valid.
+            if (emailInput.value && emailInput.checkValidity()) {
+                // If valid, add the 'success' class to show the confirmation message.
+                form.classList.add('success');
+                console.log(`Email captured: ${emailInput.value}`);
+            } else {
+                // If invalid, shake the form to provide visual feedback.
+                gsap.fromTo(form, { x: -8 }, { x: 8, duration: 0.1, repeat: 3, yoyo: true, clearProps: "x" });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -3,33 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Place this inside the <head> section -->
     <link rel="icon" type="image/png" href="logo.png">
-
     <title>Coming Soon | Akaay</title>
 
-    <!-- Google Fonts: Inter (A clean, strong, modern font) -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 
+    <!-- SEO Meta Tags -->
     <meta name="description" content="A new kind of supermarket coming soon — shop kitchenware, school supplies, and household essentials, all in one place. No food, just everything else.">
     <meta name="keywords" content="supermarket, kitchen utensils, school supplies, household items, non-food store">
-    <meta name="author" content="Everyday Essentials">
+    <meta name="author" content="Akaay">
+
     <!-- GSAP (GreenSock Animation Platform) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
         /* === CSS STYLES === */
         :root {
-            /* Color Palette from your image */
+            /* Color Palette */
             --primary-blue: #004689;
             --accent-yellow: #FED209;
-            --secondary-teal: #005555;
             --secondary-blue: #008ED2;
             --dark-text: #000000;
             --light-text: #555555;
-            --bg-color: #F4F7F9; /* A very light, clean grey */
+            --bg-color: #F4F7F9;
             --card-bg: #FFFFFF;
             --border-color: #EAEAEA;
             --shadow-color: rgba(0, 70, 137, 0.1);
@@ -52,6 +51,7 @@
             background-color: var(--bg-color);
             color: var(--dark-text);
             display: flex;
+            flex-direction: column; /* Allows footer to be pushed down */
             justify-content: center;
             align-items: center;
             padding: 1.5rem;
@@ -62,7 +62,7 @@
             max-width: 700px;
             width: 100%;
             background-color: var(--card-bg);
-            padding: clamp(2rem, 8vw, 4rem);
+            padding: clamp(2.5rem, 8vw, 4rem);
             border-radius: 16px;
             box-shadow: 0 25px 50px -12px var(--shadow-color);
             text-align: center;
@@ -72,9 +72,9 @@
 
         /* --- Logo --- */
         .logo {
-            max-height: 250px;
+            max-height: 250px; /* Kept your preference */
             width: auto;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
             opacity: 0;
             transform: translateY(20px);
         }
@@ -84,25 +84,24 @@
             font-size: clamp(2.5rem, 8vw, 3.75rem);
             font-weight: 800;
             line-height: 1.2;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             opacity: 0;
             transform: translateY(20px);
         }
 
         .highlight {
-            /* Underline effect with the accent yellow */
             background-image: linear-gradient(180deg, transparent 65%, var(--accent-yellow) 65%);
             background-repeat: no-repeat;
             background-size: 0% 100%;
             padding: 0 0.1em;
-            display: inline; /* Use inline not inline-block to allow wrapping */
+            display: inline;
         }
 
         .subtitle {
             font-size: 1.1rem;
             color: var(--light-text);
             max-width: 500px;
-            margin: 0 auto 3rem auto;
+            margin: 0 auto 2.5rem auto;
             line-height: 1.7;
             opacity: 0;
             transform: translateY(20px);
@@ -116,6 +115,7 @@
             min-height: 55px;
             opacity: 0;
             transform: translateY(20px);
+            margin-bottom: 2.5rem; /* Added space for contact links */
         }
 
         .form-container {
@@ -157,31 +157,69 @@
             background-color: var(--secondary-blue);
         }
 
-        .signup-form.success .form-container {
-            opacity: 0;
-            pointer-events: none;
-        }
+        .signup-form.success .form-container { opacity: 0; pointer-events: none; }
+        .success-message { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; font-weight: 600; color: var(--primary-blue); font-size: 1.1rem; opacity: 0; pointer-events: none; transition: all 0.4s ease; }
+        .signup-form.success .success-message { opacity: 1; }
 
-        .success-message {
-            position: absolute;
-            inset: 0;
+        /* --- Prominent Contact Links --- */
+        .contact-links {
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--dark-text);
+            text-decoration: none;
             font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            opacity: 0; /* For GSAP animation */
+            transform: translateY(20px);
+        }
+
+        .contact-links a:hover {
             color: var(--primary-blue);
-            font-size: 1.1rem;
+            transform: scale(1.05);
+        }
+
+        .contact-links svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+            color: var(--primary-blue);
+        }
+
+        /* --- Footer --- */
+        .site-footer {
+            width: 100%;
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            text-align: center;
             opacity: 0;
-            pointer-events: none;
-            transition: all 0.4s ease;
+            transform: translateY(20px);
+            color: var(--light-text);
+            font-size: 0.9rem;
         }
 
-        .signup-form.success .success-message {
-            opacity: 1;
+        /* === RESPONSIVE DESIGN === */
+
+        /* -- Tablet and Smaller Desktops -- */
+        @media (max-width: 768px) {
+            h1 { font-size: clamp(2.2rem, 7vw, 3rem); }
+            .subtitle { font-size: 1rem; }
+            .card { padding: 2.5rem; }
         }
 
-        /* --- Mobile Responsive Styles --- */
+        /* -- Mobile Phones -- */
         @media (max-width: 500px) {
+            body { padding: 1rem; }
+            .card { padding: 2rem 1.5rem; }
+
             .form-container {
                 flex-direction: column;
                 border-radius: 12px;
@@ -194,76 +232,19 @@
                 padding: 1.1rem;
                 width: 100%;
             }
+            .contact-links {
+                flex-direction: column;
+                gap: 1.25rem;
+            }
         }
-
-        /* --- Footer --- */
-.site-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1.5rem;
-    text-align: center;
-    opacity: 0; /* Initial state for GSAP */
-    transform: translateY(20px);
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.copyright {
-    font-size: 0.9rem;
-    color: var(--light-text);
-}
-
-.social-links {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.social-links a {
-    color: var(--light-text);
-    transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-    color: var(--primary-blue);
-    transform: translateY(-3px);
-}
-
-.social-links svg {
-    width: 22px;
-    height: 22px;
-}
-
-@media (max-width: 500px) {
-    .site-footer {
-        padding: 1.5rem 1rem;
-    }
-    .footer-content {
-        flex-direction: column-reverse; /* Puts social icons on top */
-    }
-}
-
     </style>
 </head>
 <body>
 
 <main class="card">
-    <!-- ======================================= -->
-    <!-- === REPLACE WITH YOUR PNG LOGO HERE === -->
-    <img src="logo.png" alt="akaay Logo" class="logo">
-    <!-- ======================================= -->
-
+    <img src="logo.png" alt="Akaay Logo" class="logo">
     <h1>Something new is <span class="highlight">coming.</span></h1>
-
-    <p class="subtitle">
-        We are launching a new collection of high-quality essentials designed to simplify and beautify your home.
-    </p>
+    <p class="subtitle">We're launching a new collection of high-quality essentials designed to simplify and beautify your home.</p>
 
     <form class="signup-form" id="notifyForm">
         <div class="form-container">
@@ -274,53 +255,52 @@
             ✅ Awesome! We'll keep you updated.
         </div>
     </form>
+
+    <div class="contact-links">
+        <a href="tel:+250796888888">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+            <span>+250 796 888 888</span>
+        </a>
+        <a href="mailto:akaay.ltd@gmail.com">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <span>akaay.ltd@gmail.com</span>
+        </a>
+    </div>
 </main>
 
-<!-- ADD THIS FOOTER HTML RIGHT AFTER YOUR </main> TAG -->
-
 <footer class="site-footer">
-    <div class="footer-content">
-        <p class="copyright">© 2025 Akaay. All Rights Reserved.</p>
-    </div>
+    <p>© 2025 Akaay. All Rights Reserved.</p>
 </footer>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
         // --- 1. SETUP THE GSAP ANIMATION TIMELINE ---
-        // This runs once when the page loads to animate elements into view.
         const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1 } });
 
-        // This is the corrected sequence of animations for all page elements.
         tl.to('.card', { opacity: 1, y: 0, duration: 1.2 })
           .to('.logo', { opacity: 1, y: 0 }, "-=0.9")
           .to('h1', { opacity: 1, y: 0 }, "-=0.9")
           .to('.highlight', { backgroundSize: '100% 100%', ease: 'power2.inOut', duration: 0.7 }, "-=0.7")
           .to('.subtitle', { opacity: 1, y: 0 }, "-=1")
-          // The footer animation is now correctly placed here to animate with the main content.
-          .to('.site-footer', { opacity: 1, y: 0 }, "-=0.8")
-          // The form animates in last.
-          .to('.signup-form', { opacity: 1, y: 0 }, "-=0.8");
-
+          .to('.signup-form', { opacity: 1, y: 0 }, "-=0.9")
+          .to('.contact-links a', { opacity: 1, y: 0, stagger: 0.2 }, "-=0.7")
+          .to('.site-footer', { opacity: 1, y: 0 }, "-=0.8");
 
         // --- 2. SETUP THE FORM SUBMISSION LOGIC ---
-        // This runs only when the user interacts with the form.
         const form = document.getElementById('notifyForm');
         const emailInput = document.getElementById('emailInput');
 
         form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent the page from reloading on submit.
-
-            // Check if the email input is valid.
+            e.preventDefault();
             if (emailInput.value && emailInput.checkValidity()) {
-                // If valid, add the 'success' class to show the confirmation message.
                 form.classList.add('success');
                 console.log(`Email captured: ${emailInput.value}`);
             } else {
-                // If invalid, shake the form to provide visual feedback.
                 gsap.fromTo(form, { x: -8 }, { x: 8, duration: 0.1, repeat: 3, yoyo: true, clearProps: "x" });
             }
         });
     });
 </script>
+
 </body>
 </html>
